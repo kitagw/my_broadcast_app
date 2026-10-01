@@ -1,6 +1,7 @@
-from jnius import autoclass # type: ignore
 import time
 from time import sleep
+
+from jnius import autoclass  # type: ignore
 
 # Javaクラスのインポート
 Log = autoclass('android.util.Log')
@@ -101,7 +102,7 @@ def update_notification(counter):
 
         # 2. Builderで新しい通知テキストを設定
         builder = NotificationBuilder(app_context, CHANNEL_ID)
-        builder.setContentTitle("サービス稼働中")
+        builder.setContentTitle("my_broadcast_app からの通知")
         # ここでカウンターを表示
         builder.setContentText(f"現在のカウント: {counter} 秒経過") 
         builder.setSmallIcon(service.getApplicationInfo().icon)
@@ -134,11 +135,7 @@ try:
         counter += 1
         Log.i(TAG, "Service heartbeat...")
         send_broadcast(start_time, counter)
-
-        if counter % 10 == 0:  # 10秒ごとに通知を更新
-            update_notification(counter)
-
+        update_notification(counter)
         time.sleep(1)
 except Exception as e:
     Log.e(TAG, "Service crashed: " + str(e))
-    
