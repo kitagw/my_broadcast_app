@@ -127,14 +127,8 @@ class MainScreen(BoxLayout):
             self.log('テスト3')
 
     def setup_android_and_start_service(self, dt):
-         # すでに起動済みならスキップ
-        if not hasattr(self, 'service_started'):
-            self.start_service()
-            self.service_started = True
-
         """Android環境でレシーバーを登録し、サービスを開始"""
-        if platform == 'android':
-            
+        if platform == 'android':            
             # 権限リクエスト (Android 9以降はFOREGROUND_SERVICEが必要)
             request_permissions([Permission.INTERNET, Permission.WAKE_LOCK, Permission.FOREGROUND_SERVICE])
             self.log("Permissions requested.") # 追加
